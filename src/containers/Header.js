@@ -16,7 +16,9 @@ export default function Header() {
          }}
       >
          <div className="item">
-            <h1>Shopping</h1>
+            <Link to="/">
+               <h1>Shopping</h1>
+            </Link>
          </div>
 
          <div className="item">

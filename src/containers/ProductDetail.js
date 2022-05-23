@@ -1,26 +1,57 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { selectedProduct } from "../redux/actions/ProductAction";
+import {
+   removeSelectedProduct,
+   selectedProduct,
+} from "../redux/actions/ProductAction";
 
 export default function ProductDetail() {
    const dispatch = useDispatch();
-   const productId = Number(useParams());
-   console.log(productId);
-   const products = useSelector((s) => s.productReducer.products);
+   const { productId } = useParams();
+   const product = useSelector((s) => s.selectedProductReducer);
+   console.log(product);
+
+   const fetchProductDetail = async () => {
+      const response = await axios
+         .get(`https://fakestoreapi.com/products/${productId}`)
+         .catch((e) => console.log(e.message));
+      dispatch(selectedProduct(response.data));
+   };
+
+   useEffect(() => {
+      if (productId && productId !== "") {
+         fetchProductDetail();
+      }
+      return () => {
+         dispatch(removeSelectedProduct());
+      };
+   }, [productId]);
 
    const renderProduct = () => {
-      return products.map((product) => {
-         // dispatch(selectedProduct(product));
+      const { id, title, category, description, image, price } = product;
+      if (id) {
+         return (
+            <div
+               className="ui  container"
+               key={id}
+               style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  alignItems: "center",
+                  gap: "2%",
+               }}
+            >
+               <div className="image">
+                  <img
+                     src={image}
+                     style={{ maxHeight: "80vh", maxWidth: "60%" }}
+                  />
+               </div>
 
-         const { id, title, category, description, image, price } = product;
-         if (productId === id) {
-            return (
-               <div className="ui card" key={id}>
-                  <div className="image">
-                     <img src={image} style={{ height: "200px" }} />
-                  </div>
+               <div>
                   <div className="content">
                      <p className="header">{title}</p>
                      <div className="meta">
@@ -35,9 +66,12 @@ export default function ProductDetail() {
                      </b>
                   </div>
                </div>
-            );
-         }
-      });
+            </div>
+         );
+      } else {
+         return <h1>...Loading</h1>;
+      }
    };
+
    return <div>{renderProduct()}</div>;
 }
