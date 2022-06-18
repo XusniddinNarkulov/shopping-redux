@@ -29,22 +29,48 @@ const ProductList = () => {
       return products.map((product) => {
          const { id, title, category, description, image, price } = product;
          return (
-            <Link to={`/product/${id}`}>
-               <div className="ui card" key={id}>
+            <Link to={`/product/${id}`} key={id}>
+               <div
+                  className="ui card"
+                  style={{
+                     // height: "440px",
+                     display: "grid",
+                     gridTemplateRows: "4fr 2fr 1fr",
+                  }}
+               >
                   <div className="image">
-                     <img src={image} style={{ height: "200px" }} />
+                     <img
+                        src={image}
+                        style={{ height: "200px", objectFit: "contain" }}
+                     />
                   </div>
-                  <div className="content">
-                     <p className="header">{title}</p>
+                  <div
+                     className="content"
+                     style={{ display: "grid", gridTemplateRows: "50px" }}
+                  >
+                     <p className="header" style={{ overflowX: "hidden" }}>
+                        {title}
+                     </p>
                      <div className="meta">
                         <span className="date">{category}</span>
                      </div>
                      {/* <div className="description">{description}</div> */}
                   </div>
-                  <div className="extra content">
+                  <div
+                     className="extra content"
+                     style={{
+                        color: "black",
+                        display: "grid",
+                        gridTemplateColumns: "4fr 1fr ",
+                        fontSize: "1.4rem",
+                     }}
+                  >
                      <b>
                         <i>$ </i>
                         {price}
+                     </b>
+                     <b>
+                        <i className="cart arrow down icon"></i>
                      </b>
                   </div>
                </div>
