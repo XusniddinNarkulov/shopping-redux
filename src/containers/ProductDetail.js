@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import {
+   addToCartAction,
    removeSelectedProduct,
    selectedProduct,
 } from "../redux/actions/ProductAction";
@@ -12,6 +13,7 @@ import {
 export default function ProductDetail() {
    const dispatch = useDispatch();
    const { productId } = useParams();
+   console.log(useParams());
    const product = useSelector((s) => s.selectedProductReducer);
    console.log(product);
 
@@ -52,7 +54,10 @@ export default function ProductDetail() {
                      style={{ maxHeight: "80vh", maxWidth: "60%" }}
                   />
                </div>
-               <div className="card" style={{ width: "90%" }}>
+               <div
+                  className="card"
+                  style={{ width: "90%", cursor: "default" }}
+               >
                   <div className="image">{/* <img src={image} /> */}</div>
                   <div className="content">
                      <div className="header">{title}</div>
@@ -65,7 +70,11 @@ export default function ProductDetail() {
                      className="extra content"
                      style={{ color: "black", fontSize: "1.4rem" }}
                   >
-                     <span className="right floated">
+                     <span
+                        onClick={() => dispatch(addToCartAction(id))}
+                        className="right floated purple"
+                        style={{ cursor: "pointer" }}
+                     >
                         ADD TO CART {""}
                         <i className="cart arrow down icon"></i>
                      </span>

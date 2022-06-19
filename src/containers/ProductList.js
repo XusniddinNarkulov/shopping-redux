@@ -5,8 +5,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import "../index.css";
-import ProductComponents from "./ProductComponents";
-import { selectedProduct, setProduct } from "../redux/actions/ProductAction";
+import {
+   addToCartAction,
+   selectedProduct,
+   setProduct,
+} from "../redux/actions/ProductAction";
+import { hover } from "@testing-library/user-event/dist/hover";
 
 const ProductList = () => {
    const products = useSelector((s) => s.productReducer.products);
@@ -29,24 +33,33 @@ const ProductList = () => {
       return products.map((product) => {
          const { id, title, category, description, image, price } = product;
          return (
-            <Link to={`/product/${id}`} key={id}>
+            <div
+               key={id}
+               className="ui card"
+               style={{
+                  // height: "440px",
+                  display: "grid",
+                  gridTemplateRows: "4fr 2fr 1fr",
+               }}
+            >
                <div
-                  className="ui card"
-                  style={{
-                     // height: "440px",
-                     display: "grid",
-                     gridTemplateRows: "4fr 2fr 1fr",
-                  }}
+                  className="image"
+                  style={{ backgroundColor: "white", padding: "3%" }}
                >
-                  <div className="image">
-                     <img
-                        src={image}
-                        style={{ height: "200px", objectFit: "contain" }}
-                     />
-                  </div>
+                  <img
+                     src={image}
+                     style={{ height: "200px", objectFit: "contain" }}
+                  />
+               </div>
+               <Link to={`/product/${id}`}>
                   <div
                      className="content"
-                     style={{ display: "grid", gridTemplateRows: "50px" }}
+                     style={{
+                        display: "grid",
+                        gridTemplateRows: "50px",
+                        padding: "2%",
+                        // fontSize: "1rem",
+                     }}
                   >
                      <p className="header" style={{ overflowX: "hidden" }}>
                         {title}
@@ -56,25 +69,33 @@ const ProductList = () => {
                      </div>
                      {/* <div className="description">{description}</div> */}
                   </div>
-                  <div
-                     className="extra content"
+               </Link>
+               <div
+                  className="extra content"
+                  style={{
+                     color: "black",
+                     display: "grid",
+                     gridTemplateColumns: "4fr 1fr ",
+                     fontSize: "1.4rem",
+                  }}
+               >
+                  <b>
+                     <i>$ </i>
+                     {price}
+                  </b>
+                  <b
+                     className="purple"
+                     onClick={() => {
+                        dispatch(addToCartAction(id));
+                     }}
                      style={{
-                        color: "black",
-                        display: "grid",
-                        gridTemplateColumns: "4fr 1fr ",
-                        fontSize: "1.4rem",
+                        cursor: "pointer",
                      }}
                   >
-                     <b>
-                        <i>$ </i>
-                        {price}
-                     </b>
-                     <b>
-                        <i className="cart arrow down icon"></i>
-                     </b>
-                  </div>
+                     <i className="cart arrow down icon"></i>
+                  </b>
                </div>
-            </Link>
+            </div>
          );
       });
    };
