@@ -9,6 +9,7 @@ import {
    removeSelectedProduct,
    selectedProduct,
 } from "../redux/actions/ProductAction";
+import Loader from "./Loader";
 
 export default function ProductDetail() {
    const dispatch = useDispatch();
@@ -88,7 +89,7 @@ export default function ProductDetail() {
             </div>
          );
       } else {
-         return <h1>...Loading</h1>;
+         return <Loader />;
       }
    };
 

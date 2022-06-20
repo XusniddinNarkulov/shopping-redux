@@ -1,4 +1,4 @@
-import { removeSelectedProduct } from "../actions/ProductAction";
+// import { removeSelectedProduct } from "../actions/ProductAction";
 import { ActionTypes } from "../constants/ActionTypes";
 
 const initialState = {
@@ -54,9 +54,9 @@ export const selectedProductReducer = (
    if (type === ActionTypes.SELECTED_PRODUCT) {
       return { ...state, ...payload };
    }
-   if (type === ActionTypes.REMOVE_SELECTED_PRODUCT) {
-      return {};
-   }
+   // if (type === ActionTypes.REMOVE_SELECTED_PRODUCT) {
+   //    return {};
+   // }
    return state;
 };
 
