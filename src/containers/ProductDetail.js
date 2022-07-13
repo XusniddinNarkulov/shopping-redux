@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import {
    addToCartAction,
-   removeSelectedProduct,
+   // removeSelectedProduct,
    selectedProduct,
 } from "../redux/actions/ProductAction";
 import Loader from "./Loader";
@@ -29,9 +29,9 @@ export default function ProductDetail() {
       if (productId && productId !== "") {
          fetchProductDetail();
       }
-      return () => {
-         dispatch(removeSelectedProduct());
-      };
+      // return () => {
+      //    dispatch(removeSelectedProduct());
+      // };
    }, [productId]);
 
    const renderProduct = () => {
